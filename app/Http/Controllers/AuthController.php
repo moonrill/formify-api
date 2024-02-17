@@ -22,7 +22,7 @@ class AuthController extends Controller
         // Validate request data
         $validator = Validator::make($request->all(), [
             'name'     => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:5'],
             'email'    => ['required', 'email', 'string', 'unique:users,email'],
         ]);
 
@@ -31,9 +31,9 @@ class AuthController extends Controller
         {
             // Throw validation error response
             return response()->json([
-                'message' => 'Validation error',
+                'message' => 'Invalid fields',
                 'errors'  => $validator->errors(),
-            ], 400);
+            ], 422);
         }
 
         // Create new user
