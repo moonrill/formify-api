@@ -11,32 +11,32 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     /**
-     * A description of the entire PHP function.
+     * Register a new user
      *
-     * @param Request $request description
-     * @throws JsonResponse validation error
+     * @param Request $request The HTTP request
+     * @throws JsonResponse When validation fails
      * @return JsonResponse
      */
     public function register(Request $request): JsonResponse
     {
-        // Validate request
+        // Validate request data
         $validator = Validator::make($request->all(), [
             'name'     => ['required', 'string'],
             'password' => ['required', 'string'],
             'email'    => ['required', 'email', 'string', 'unique:users,email'],
         ]);
 
-        // If validation fails
+        // Check if validation fails
         if ($validator->fails())
         {
-            // Throw validation error
+            // Throw validation error response
             return response()->json([
                 'message' => 'Validation error',
                 'errors'  => $validator->errors(),
             ], 400);
         }
 
-        // Create user
+        // Create new user
         $user = User::query()->create([
             'name'     => $request->name,
             'password' => $request->password,
@@ -47,7 +47,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        // Send response
+        // Return success 
         return response()->json([
             'message' => 'Register success',
             'data'    => $user,
