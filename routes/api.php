@@ -26,9 +26,11 @@ Route::prefix('v1')->group(function () {
         });
     });
     Route::middleware('auth:sanctum')->group(function () {
+        // Routes for forms
         Route::prefix('forms')->controller(FormController::class)->group(function () {
             Route::post('/', 'create');
             Route::get('/', 'getAll');
+            Route::get('/{slug}', 'detail');
         });
     });
 });

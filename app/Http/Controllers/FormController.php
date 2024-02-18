@@ -82,4 +82,39 @@ class FormController extends Controller
             'forms'   => $forms,
         ], 200);
     }
+
+    /**
+     * Detail function to retrieve form details by slug
+     *
+     * @param string $slug The unique identifier for the form
+     * @return JsonResponse
+     */
+    public function detail(string $slug): JsonResponse
+    {
+        $form = Form::query()
+            ->with('allowedDomains', 'questions')
+            ->where('slug', $slug)
+            ->first();
+
+        // Check if form not found
+        if (!$form)
+        {
+            return response()->json([
+                'message' => 'Form not found',
+            ]);
+        }
+
+        // Get allowed domains
+        $allowedDomains = $form->allowedDomains->pluck('domain')->toArray();
+
+        // Combine form detail with allowed domains
+        $formDetail                    = $form->toArray();
+        $formDetail['allowed_domains'] = $allowedDomains;
+
+        // Return form detail 
+        return response()->json([
+            'message' => 'Get form success',
+            'form'    => $formDetail,
+        ]);
+    }
 }
