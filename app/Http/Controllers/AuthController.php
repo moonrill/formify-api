@@ -120,4 +120,17 @@ class AuthController extends Controller
             'message' => 'Logout success',
         ], 200);
     }
+
+    /**
+     * Get the authenticated user's data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me(): JsonResponse
+    {
+        // Return user data
+        return response()->json([
+            'user' => Auth::user(),
+        ], 200);
+    }
 }
