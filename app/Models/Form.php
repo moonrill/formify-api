@@ -13,16 +13,16 @@ class Form extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function questions()
     {
-        $this->hasMany(Question::class);
+        return $this->hasMany(Question::class);
     }
 
     public function allowedDomains()
     {
-        $this->hasMany(AllowedDomain::class);
+        return $this->hasMany(AllowedDomain::class);
     }
 }
