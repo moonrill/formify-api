@@ -67,4 +67,19 @@ class FormController extends Controller
             'form'    => $form,
         ]);
     }
+
+    /**
+     * Get all forms.
+     *
+     * @return JsonResponse
+     */
+    public function getAll(): JsonResponse
+    {
+        $forms = Form::query()->get();
+
+        return response()->json([
+            'message' => 'Get all forms success',
+            'forms'   => $forms,
+        ], 200);
+    }
 }

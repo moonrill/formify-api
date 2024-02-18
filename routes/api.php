@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('forms')->controller(FormController::class)->group(function () {
             Route::post('/', 'create');
+            Route::get('/', 'getAll');
         });
     });
 });
