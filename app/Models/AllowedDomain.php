@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class AllowedDomain extends Model
 {
     use HasFactory;
+
+    protected $table = 'allowed_domains';
+    protected $guarded = [];
+    public $timestamps = false;
+
+    public function form()
+    {
+        $this->belongsTo(Form::class);
+    }
 }

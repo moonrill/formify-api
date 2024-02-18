@@ -47,4 +47,9 @@ class User extends Authenticatable
      * The attributes that should be mutated to dates.
      */
     public $timestamps = false;
+
+    public function forms()
+    {
+        $this->hasMany(Form::class);
+    }
 }
