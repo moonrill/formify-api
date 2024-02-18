@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('form_id');
             $table->string('name');
             $table->enum('choice_type', ['short answer', 'paragraph', 'date', 'time', 'multiple choice', 'dropdown', 'checkboxes']);
-            $table->string('choice');
+            $table->string('choice')->nullable(true);
             $table->tinyInteger('is_required');
 
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade')->onUpdate('cascade');
