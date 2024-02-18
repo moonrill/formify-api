@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\AllowedDomain;
 use App\Models\Form;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class FormController extends Controller
 {
+    /**
+     * Create a new form based on the form data from the request.
+     *
+     * @param Request $request The request containing the form data
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         // Validate form data
