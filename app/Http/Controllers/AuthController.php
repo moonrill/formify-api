@@ -96,7 +96,7 @@ class AuthController extends Controller
                     'email'       => $user->email,
                     'accessToken' => $token,
                 ],
-            ]);
+            ], 201);
         }
 
         // Return error message if login fails
@@ -105,8 +105,19 @@ class AuthController extends Controller
         ], 401);
     }
 
-    public function logout()
+    /**
+     * Log the user out and delete all the user's tokens.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(): JsonResponse
     {
+        // Delete user tokens
+        Auth::user()->tokens()->delete();
 
+        // Return success response
+        return response()->json([
+            'message' => 'Logout success',
+        ], 200);
     }
 }
