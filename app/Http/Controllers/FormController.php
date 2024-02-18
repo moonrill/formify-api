@@ -101,7 +101,7 @@ class FormController extends Controller
         {
             return response()->json([
                 'message' => 'Form not found',
-            ]);
+            ], 404);
         }
 
         // Get allowed domains
