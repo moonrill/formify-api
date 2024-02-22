@@ -34,8 +34,10 @@ Route::prefix('v1')->group(function () {
                 Route::get('/', 'getAll');
                 Route::get('/{slug}', 'detail');
             });
+            // Routes for questions
             Route::controller(QuestionController::class)->group(function () {
                 Route::post('/{slug}/questions', 'create');
+                Route::delete('/{slug}/questions/{question_id}', 'delete');
             });
         });
     });
