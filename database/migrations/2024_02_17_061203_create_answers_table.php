@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('response_id');
             $table->unsignedBigInteger('question_id');
-            $table->text('value');
+            $table->text('value')->nullable(true);
 
             $table->foreign('response_id')->references('id')->on('responses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
