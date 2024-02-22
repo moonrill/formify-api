@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('slug');
             $table->string('description');
-            $table->tinyInteger('limit_one_response');
+            $table->tinyInteger('limit_one_response')->default(0);
             $table->unsignedBigInteger('creator_id');
 
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
