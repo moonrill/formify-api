@@ -92,6 +92,14 @@ class QuestionController extends Controller
             ], 404);
         }
 
+        // Check if user is creator of the form
+        if ($form->creator_id !== auth()->user()->id)
+        {
+            return response()->json([
+                'message' => 'Forbidden access',
+            ], 403);
+        }
+
         // Find question by id
         $question = Question::query()->find($question_id);
 
