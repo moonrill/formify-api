@@ -11,4 +11,19 @@ class Response extends Model
 
     protected $guarded = [];
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function form()
+    {
+        return $this->belongsTo(Form::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }

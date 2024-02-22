@@ -11,4 +11,14 @@ class Answer extends Model
 
     protected $guarded = [];
     public $timestamps = false;
+
+    public function response()
+    {
+        return $this->belongsTo(Response::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }
