@@ -10,6 +10,14 @@ use Validator;
 
 class ResponseController extends Controller
 {
+    /**
+     * Create a new response for the given form slug.
+     *
+     * @param string $slug The slug of the form
+     * @param Request $request The HTTP request containing form answers
+     * @throws \Illuminate\Validation\ValidationException If the request data is invalid
+     * @return \Illuminate\Http\JsonResponse The JSON response indicating the success or failure of the form submission
+     */
     public function create(string $slug, Request $request): JsonResponse
     {
         // Find form by slug
