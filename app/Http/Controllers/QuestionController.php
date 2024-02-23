@@ -40,7 +40,6 @@ class QuestionController extends Controller
 
         // Validate request
         $validator = Validator::make($request->all(), [
-            'form_id'     => ['required', 'exists:forms,id'],
             'name'        => ['required'],
             'choice_type' => ['required', 'in:short answer,paragraph,date,time,multiple choice,dropdown,checkboxes'],
             'choices'     => ['required_if:choice_type,multiple choice,dropdown,checkboxes'],
@@ -56,11 +55,20 @@ class QuestionController extends Controller
             ], 422);
         }
 
+        $choices = $request->choices;
+
+        // Convert array of choices to string
+        if ($request->choices !== null)
+        {
+            $choices = $request->choices = implode(',', $request->choices);
+        }
+
         // Create question
         $question = $form->questions()->create([
+            'form_id'     => $form->id,
             'name'        => $request->name,
             'choice_type' => $request->choice_type,
-            'choices'     => $request->choices,
+            'choices'     => $choices,
             'is_required' => $request->is_required,
         ]);
 
