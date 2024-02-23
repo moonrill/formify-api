@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Answer;
 use App\Models\Form;
 use App\Models\Response;
 use Illuminate\Http\JsonResponse;
