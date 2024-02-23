@@ -43,6 +43,7 @@ Route::prefix('v1')->group(function () {
             // Route for answers/responses
             Route::controller(ResponseController::class)->group(function () {
                 Route::post('/{slug}/responses', 'create');
+                Route::get('/{slug}/responses', 'getAll');
             });
         });
     });

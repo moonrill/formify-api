@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Form;
 use App\Models\Response;
 use Illuminate\Http\JsonResponse;
@@ -111,6 +112,67 @@ class ResponseController extends Controller
 
         return response()->json([
             'message' => 'Submit response success',
+        ]);
+    }
+
+    /**
+     * Get all responses for a form with the given slug
+     *
+     * @param string $slug
+     * @return JsonResponse
+     */
+    public function getAll(string $slug): JsonResponse
+    {
+        // Find the form by its slug
+        $form = Form::query()->where('slug', $slug)->first();
+
+        // If form not found, return error response
+        if (!$form)
+        {
+            return response()->json([
+                'message' => 'Form not found',
+            ], 404);
+        }
+
+        // If the user is not the creator, return forbidden access error response
+        if ($form->creator_id != auth()->user()->id)
+        {
+            return response()->json([
+                'message' => 'Forbidden access',
+            ], 403);
+        }
+
+        // Get all responses for the form
+        $responses = Response::query()->with('user', 'answers')->where('form_id', $form->id)->get();
+
+        // Initialize array to store new response data
+        $newResponses = [];
+
+        // Iterate over each response to create new response data
+        foreach ($responses as $response)
+        {
+            // Initialize array to store new answers
+            $answers = [];
+
+            // Iterate over each answer to create new answer data
+            foreach ($response->answers as $answer)
+            {
+                // Assign each answer to the new answer array
+                $answers[$answer->question->name] = $answer->value;
+            }
+
+            // Add new response data to the new responses array
+            $newResponses[] = [
+                'date'    => $response->date,
+                'user'    => $response->user,
+                'answers' => $answers,
+            ];
+        }
+
+        // Return success response with the new responses
+        return response()->json([
+            'message'   => 'Get responses success',
+            'responses' => $newResponses,
         ]);
     }
 }
