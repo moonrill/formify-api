@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResponseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +28,8 @@ Route::prefix('v1')->group(function () {
         });
     });
     Route::middleware('auth:sanctum')->group(function () {
-        // Routes for forms
         Route::prefix('forms')->group(function () {
+            // Routes for forms
             Route::controller(FormController::class)->group(function () {
                 Route::post('/', 'create');
                 Route::get('/', 'getAll');
@@ -38,6 +39,10 @@ Route::prefix('v1')->group(function () {
             Route::controller(QuestionController::class)->group(function () {
                 Route::post('/{slug}/questions', 'create');
                 Route::delete('/{slug}/questions/{question_id}', 'delete');
+            });
+            // Route for answers/responses
+            Route::controller(ResponseController::class)->group(function () {
+                Route::post('/{slug}/responses', 'create');
             });
         });
     });
