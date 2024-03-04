@@ -92,7 +92,7 @@ class FormController extends Controller
     public function detail(string $slug): JsonResponse
     {
         $form = Form::query()
-            ->with('allowedDomains', 'questions')
+            ->with('allowedDomains', 'questions', 'creator')
             ->where('slug', $slug)
             ->first();
 
