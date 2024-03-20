@@ -88,14 +88,12 @@ class AuthController extends Controller
             // Generate access token
             $token = $user->createToken('AuthToken')->plainTextToken;
 
+            $user->accessToken = $token;
+
             // Return success response
             return response()->json([
                 'message' => 'Login success',
-                'user'    => [
-                    'name'        => $user->name,
-                    'email'       => $user->email,
-                    'accessToken' => $token,
-                ],
+                'user'    => $user,
             ], 201);
         }
 

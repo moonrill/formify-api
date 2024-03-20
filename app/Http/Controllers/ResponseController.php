@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Answer;
 use App\Models\Form;
 use App\Models\Response;
 use Illuminate\Http\JsonResponse;
@@ -74,12 +73,23 @@ class ResponseController extends Controller
             }
         }
 
-        // Validate request data
-        $validator = Validator::make($request->all(), [
+        // Create validaton rules
+        $validationRules = [
             'answers'               => ['required', 'array'],
             'answers.*.question_id' => ['required', 'integer', 'exists:questions,id'],
-            'answers.*.value'       => ['nullable'],
-        ]);
+        ];
+
+        // Check if questions is required
+        for ($i = 0; $i < count($form->questions); $i++)
+        {
+            if ($form->questions[$i]->is_required)
+            {
+                $validationRules["answers.{$i}.value"] = ['required'];
+            }
+        }
+
+        // Validate request
+        $validator = Validator::make($request->all(), $validationRules);
 
         // Check if validation fails
         if ($validator->fails())

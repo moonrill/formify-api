@@ -11,9 +11,9 @@ class Form extends Model
     protected $guarded = [];
     public $timestamps = false;
 
-    public function user()
+    public function creator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
     public function questions()
